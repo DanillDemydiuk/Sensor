@@ -1,0 +1,22 @@
+﻿@page "/"
+@using Sensor.Models
+@inject Sensor.Client.Services.MeasurementService MeasurementService
+
+<h3>Measurements</h3>
+<button @onclick="LoadMeasurements">Load</button>
+
+<ul>
+    @foreach (var m in measurements)
+    {
+        <li>@m.Value - @m.Time</li>
+    }
+</ul>
+
+@code {
+    List<Measurement> measurements = new();
+
+    private async Task LoadMeasurements()
+    {
+        measurements = await MeasurementService.GetAllAsync();
+    }
+}
